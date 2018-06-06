@@ -9,6 +9,34 @@ Quick links: [Using](#using) | [Installing](#installing) | [Contributing](#contr
 
 ## Using
 
+This package implements the following commands:
+
+### wp term-count-audit
+
+Audit and fix term counts.
+
+~~~
+wp term-count-audit [--fix] [--format=<format>] [--verbose]
+~~~
+
+**OPTIONS**
+
+	[--fix]
+		If present, term counts will be updated.
+
+	[--format=<format>]
+		Accepted values: table, csv, json, count. Default: table
+
+	[--verbose]
+		If present, all terms will be shown. Otherwise, only terms with mismatched counts will be returned.
+
+**EXAMPLES**
+
+	wp term-count-audit
+	wp term-count-audit --fix
+	wp term-count-audit --format=json
+	wp term-count-audit --verbose
+
 ## Installing
 
 Installing this package requires WP-CLI v1.1.0 or greater. Update to the latest stable release with `wp cli update`.

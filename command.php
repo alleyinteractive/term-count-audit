@@ -1,25 +1,27 @@
 <?php
-/*
+/**
 	Plugin Name: Term Count Audit
-	Plugin URI: https://github.com/alleyinteractive/term-count-audit
+	Plugin URI:  https://github.com/alleyinteractive/term-count-audit
 	Description: WP-CLI command to check that term counts are accurate and/or fix them.
-	Version: 0.1
-	Author: Alley Interactive
-	Author URI: http://www.alleyinteractive.com/
-*/
-/*  This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+	Version:     0.1
+	Author:      Alley
+	Author URI:  https://alley.co/
+ */
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+/*
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 /**
@@ -53,14 +55,14 @@ class Term_Count_Audit_CLI_Command {
 	 */
 	public function __invoke( $args, $assoc_args ) {
 		$assoc_args = wp_parse_args( $assoc_args, array(
-			'fix' => false,
-			'format' => 'table',
+			'fix'     => false,
+			'format'  => 'table',
 			'verbose' => false,
 		) );
 
 		$rows = array();
 
-		// Get all taxonomies
+		// Get all taxonomies.
 		$taxonomies = get_taxonomies();
 		if ( empty( $taxonomies ) ) {
 			\WP_CLI::error( 'No taxonomies found!' );
@@ -80,8 +82,8 @@ class Term_Count_Audit_CLI_Command {
 		}
 
 		$total_terms = get_terms( array(
-			'taxonomy' => $taxonomies,
-			'fields' => 'count',
+			'taxonomy'   => $taxonomies,
+			'fields'     => 'count',
 			'hide_empty' => 0,
 		) );
 
@@ -96,16 +98,16 @@ class Term_Count_Audit_CLI_Command {
 
 			// Get all terms for the taxonomy.
 			$terms = get_terms( array(
-				'taxonomy' => $taxonomy,
+				'taxonomy'   => $taxonomy,
 				'hide_empty' => 0,
 			) );
 
 			if ( is_array( $terms ) && ! empty( $terms ) ) {
 				foreach ( $terms as $term ) {
 					$row = array(
-						'ID' => $term->term_id,
-						'Taxonomy' => $term->taxonomy,
-						'Slug' => $term->slug,
+						'ID'           => $term->term_id,
+						'Taxonomy'     => $term->taxonomy,
+						'Slug'         => $term->slug,
 						'Cached Count' => $term->count,
 					);
 
@@ -177,7 +179,7 @@ class Term_Count_Audit_CLI_Command {
 		}
 
 		if ( $object_types ) {
-			$count += (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships, $wpdb->posts WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND post_status = 'publish' AND post_type IN ('" . implode("', '", $object_types ) . "') AND term_taxonomy_id = %d", $tt_id ) );
+			$count += (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships, $wpdb->posts WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND post_status = 'publish' AND post_type IN ('" . implode( "', '", $object_types ) . "') AND term_taxonomy_id = %d", $tt_id ) );
 		}
 
 		return $count;

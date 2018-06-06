@@ -1,0 +1,16 @@
+{
+    "name": "alleyinteractive/term-count-audit",
+    "description": "WP-CLI command to check that term counts are accurate and/or fix them.",
+    "type": "wp-cli-package",
+    "homepage": "https://github.com/alleyinteractive/term-count-audit",
+    "license": "GPL-2.0-or-later",
+    "authors": [],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "files": [ "command.php" ]
+    },
+    "require": {
+        "wp-cli/wp-cli": "^1.1.0"
+    }
+}
